@@ -1,12 +1,24 @@
 import { BaseEntity } from 'src/common/entities/base.entity';
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import { CarEntity } from '../cars/car.entity';
 import { LotStatus } from 'src/common/enums/lot-status.enum';
 import { BidEntity } from '../bids/bid.entity';
 import { WatchlistEntity } from '../watchlist/watchlist.entity';
+import { UserEntity } from '../users/user.entity';
 
 @Entity('lots')
 export class LotEntity extends BaseEntity {
+  @ManyToOne(() => UserEntity, (user) => user.lots, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'owner_id' })
+  owner: UserEntity;
+
   @OneToOne(() => CarEntity, (car) => car.lot, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'car_id' })
   car: CarEntity;

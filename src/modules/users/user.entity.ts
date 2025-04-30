@@ -3,6 +3,7 @@ import { CarEntity } from '../cars/car.entity';
 import { BaseEntity } from 'src/common/entities/base.entity';
 import { BidEntity } from '../bids/bid.entity';
 import { WatchlistEntity } from '../watchlist/watchlist.entity';
+import { LotEntity } from '../lots/lot.entity';
 
 @Entity('users')
 @Unique(['email'])
@@ -27,4 +28,7 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany(() => WatchlistEntity, (wl) => wl.user)
   watchlistRows: WatchlistEntity[];
+
+  @OneToMany(() => LotEntity, (lot) => lot.owner)
+  lots: LotEntity[];
 }

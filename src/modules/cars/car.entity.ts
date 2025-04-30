@@ -6,7 +6,6 @@ import {
   ManyToOne,
   OneToMany,
   OneToOne,
-  Unique,
 } from 'typeorm';
 import { UserEntity } from '../users/user.entity';
 import { CarImageEntity } from '../car-images/car-image.entity';
@@ -14,9 +13,7 @@ import { CarDocumentEntity } from '../car-documents/car.document.entity';
 import { LotEntity } from '../lots/lot.entity';
 
 @Entity('cars')
-@Unique(['vin'])
 export class CarEntity extends BaseEntity {
-  /* FK to users */
   @ManyToOne(() => UserEntity, (user) => user.cars, {
     nullable: true,
     onDelete: 'SET NULL',
@@ -24,8 +21,8 @@ export class CarEntity extends BaseEntity {
   @JoinColumn({ name: 'owner_id' })
   owner: UserEntity | null;
 
-  @Column({ name: 'make', type: 'text' })
-  make: string;
+  @Column({ name: 'brand', type: 'text' })
+  brand: string;
 
   @Column({ name: 'model', type: 'text' })
   model: string;
@@ -33,7 +30,7 @@ export class CarEntity extends BaseEntity {
   @Column({ type: 'smallint' })
   year: number;
 
-  @Column({ type: 'char', length: 17 })
+  @Column({ type: 'char', length: 17, unique: true })
   vin: string;
 
   @Column({ type: 'integer' })
@@ -42,7 +39,6 @@ export class CarEntity extends BaseEntity {
   @Column({ type: 'text' })
   description: string;
 
-  /* relations */
   @OneToMany(() => CarImageEntity, (img) => img.car, { cascade: true })
   images: CarImageEntity[];
 
