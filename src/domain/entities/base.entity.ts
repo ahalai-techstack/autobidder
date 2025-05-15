@@ -1,0 +1,27 @@
+import { EntitySchemaColumnOptions } from 'typeorm';
+
+export class Base {
+  constructor(
+    public readonly id: string,
+    public readonly createdAt: Date,
+    public readonly updatedAt: Date,
+  ) {}
+}
+
+export const BaseColumnSchemaPart = {
+  id: {
+    type: 'uuid',
+    primary: true,
+    generated: true,
+  } as EntitySchemaColumnOptions,
+  createdAt: {
+    name: 'created_at',
+    type: 'timestamp with time zone',
+    createDate: true,
+  } as EntitySchemaColumnOptions,
+  updatedAt: {
+    name: 'updated_at',
+    type: 'timestamp with time zone',
+    updateDate: true,
+  } as EntitySchemaColumnOptions,
+};
