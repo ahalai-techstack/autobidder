@@ -1,4 +1,4 @@
-import { Lot } from 'src/domain/entities/lot.entity';
+import { Lot } from 'src/entities/lot.entity';
 import { EntitySchema } from 'typeorm';
 import { BaseColumns } from './base';
 

@@ -1,4 +1,4 @@
-import { Bid } from 'src/domain/entities/bid.entity';
+import { Bid } from 'src/entities/bid.entity';
 import { EntitySchema } from 'typeorm';
 import { BaseColumns } from './base';
 

@@ -1,5 +1,8 @@
-import { User } from '../entities/user.entity';
+// // src/domain/repositories/user-repository.interface.ts
+// import { User } from '../entities/user.entity';
 
-export interface IUserRepository {
-  findById(id: string): Promise<User | null>;
-}
+// export interface IUserRepository {
+//   findById(id: string): Promise<User | null>;
+//   findByEmail(email: string): Promise<User | null>;
+//   save(user: User): Promise<void>;
+// }

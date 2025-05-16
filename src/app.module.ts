@@ -1,16 +1,18 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserSchema } from './user/user.schema';
+import { UserModule } from './user.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: '.env',
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      url: 'postgres://postgres:postgres@db:5432/mydb',
+      entities: [UserSchema],
+      synchronize: true, // dev only
     }),
+
+    UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

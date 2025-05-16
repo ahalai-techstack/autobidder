@@ -1,4 +1,4 @@
-import { CarImage } from 'src/domain/entities/car-image.entity';
+import { CarImage } from 'src/entities/car-image.entity';
 import { EntitySchema } from 'typeorm';
 import { BaseColumns } from './base';
 

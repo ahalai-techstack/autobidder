@@ -3,6 +3,8 @@ import { EntitySchemaColumnOptions } from 'typeorm';
 export const BaseColumns: Record<string, EntitySchemaColumnOptions> = {
   id: {
     type: 'uuid',
+    generated: true,
+    primary: true,
     unique: true,
     nullable: false,
   },

@@ -10,9 +10,9 @@ export class Base {
 
 export const BaseColumnSchemaPart = {
   id: {
-    type: 'uuid',
+    type: 'integer',
     primary: true,
-    generated: true,
+    generated: 'increment',
   } as EntitySchemaColumnOptions,
   createdAt: {
     name: 'created_at',
