@@ -3,10 +3,9 @@ import { EntitySchemaColumnOptions } from 'typeorm';
 export const BaseColumns: Record<string, EntitySchemaColumnOptions> = {
   id: {
     type: 'uuid',
-    generated: true,
+    generated: 'uuid',
     primary: true,
     unique: true,
-    nullable: false,
   },
   createdAt: {
     type: 'time with time zone',

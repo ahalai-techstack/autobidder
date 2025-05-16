@@ -6,31 +6,38 @@ import {
   Body,
   Patch,
   Delete,
+  ParseUUIDPipe,
 } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
+import { UserService } from './user.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly users: UserService) {}
 
-  @Get() findAll() {
+  @Get()
+  findAll() {
     return this.users.findAll();
   }
-  @Get(':id') find(@Param('id') id: number) {
+
+  @Get(':id')
+  find(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.users.findOne(id);
   }
 
   @Post()
-  create(@Body() dto: any) {
+  create(@Body() dto: CreateUserDto) {
     return this.users.create(dto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: any) {
+  update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
     return this.users.update(id, dto);
   }
 
-  @Delete(':id') remove(@Param('id') id: string) {
+  @Delete(':id')
+  remove(@Param('id') id: string) {
     return this.users.remove(id);
   }
 }

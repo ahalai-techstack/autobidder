@@ -1,13 +1,12 @@
-import { User } from '../entities/user.entity';
+import { User } from '../../entities/user.entity';
 import { EntitySchema } from 'typeorm';
-import { BaseColumns } from 'src/infrastructure/persistence/typeorm/schemas/base';
-import { BaseColumnSchemaPart } from 'src/entities/base.entity';
+import { BaseColumns } from '../schemas/base';
 
 export const UserSchema = new EntitySchema<User>({
   name: 'user',
   tableName: 'users',
   columns: {
-    ...BaseColumnSchemaPart,
+    ...BaseColumns,
     firstName: {
       type: 'varchar',
       length: 128,
@@ -23,7 +22,7 @@ export const UserSchema = new EntitySchema<User>({
     },
     password: {
       type: 'varchar',
-      length: 32,
+      length: 256,
     },
   },
 });

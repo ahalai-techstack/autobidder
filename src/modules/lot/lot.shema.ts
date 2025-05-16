@@ -1,42 +1,35 @@
 import { Lot } from 'src/entities/lot.entity';
 import { EntitySchema } from 'typeorm';
-import { BaseColumns } from './base';
+import { BaseColumns } from 'src/modules/schemas/base';
 
 export const LotSchema = new EntitySchema<Lot>({
   name: 'lot',
   tableName: 'lots',
-  target: Lot,
   columns: {
     ...BaseColumns,
     ownerId: {
       type: 'uuid',
       name: 'owner_id',
-      nullable: false,
     },
     carId: {
       type: 'uuid',
       name: 'car_id',
-      nullable: false,
     },
     startPice: {
-      type: 'number',
+      type: 'decimal',
       name: 'start_price',
-      nullable: false,
     },
     currentPrice: {
-      type: 'number',
+      type: 'decimal',
       name: 'current_price',
-      nullable: false,
     },
     startTime: {
       type: 'time with time zone',
       name: 'start_time',
-      nullable: false,
     },
     endTime: {
       type: 'time with time zone',
       name: 'end_time',
-      nullable: false,
     },
   },
   checks: [
