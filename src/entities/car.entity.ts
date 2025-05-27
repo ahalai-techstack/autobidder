@@ -1,5 +1,6 @@
 import { EntitySchema } from 'typeorm';
-import { Base, BaseColumnSchemaPart } from './base.entity';
+import { Base } from './base.entity';
+import { BaseColumns } from 'src/modules/schemas/base';
 
 export class Car extends Base {
   constructor(
@@ -18,7 +19,7 @@ export class Car extends Base {
 export const CarEntity = new EntitySchema<Car>({
   name: 'car',
   columns: {
-    ...BaseColumnSchemaPart,
+    ...BaseColumns,
     mileage: {
       type: 'number',
     },
