@@ -8,13 +8,13 @@ import {
   Delete,
   ParseUUIDPipe,
 } from '@nestjs/common';
-import { CreateUserDto } from './application/dto/create-user.dto';
-import { UpdateUserDto } from './application/dto/update-user.dto';
-import { CreateUserUseCase } from './application/use-cases/create-user.use-case';
-import { FindAllUsersUseCase } from './application/use-cases/findAll-users.use-case';
-import { FindUserByIdUseCase } from './application/use-cases/find-user-by-id.use-case';
-import { UpdateUserUseCase } from './application/use-cases/update-user.use-case';
-import { RemoveUserUseCase } from './application/use-cases/remove-user.use-case';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserUseCase } from './use-cases/create-user.use-case';
+import { FindAllUsersUseCase } from './use-cases/find-all-users.use-case';
+import { FindUserByIdUseCase } from './use-cases/find-user-by-id.use-case';
+import { UpdateUserUseCase } from './use-cases/update-user.use-case';
+import { RemoveUserUseCase } from './use-cases/remove-user.use-case';
 
 @Controller('users')
 export class UserController {
