@@ -8,12 +8,12 @@ export const BaseColumns: Record<string, EntitySchemaColumnOptions> = {
     unique: true,
   },
   createdAt: {
-    type: 'time with time zone',
+    type: 'timestamp with time zone',
     createDate: true,
     name: 'created_at',
   },
   updatedAt: {
-    type: 'time with time zone',
+    type: 'timestamp with time zone',
     updateDate: true,
     name: 'updated_at',
   },

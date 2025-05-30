@@ -23,4 +23,29 @@ export class Lot extends Base {
   ) {
     super(id, createdAt, updatedAt);
   }
+
+  static create(
+    ownerId: string,
+    carId: string,
+    startPice: number,
+    currentPrice: number,
+    startTime: Date,
+    endTime: Date,
+    status: LotStatus = LotStatus.SCHEDULED,
+  ): Lot {
+    const id = crypto.randomUUID();
+    const currentTime = new Date();
+    return new Lot(
+      id,
+      currentTime,
+      currentTime,
+      ownerId,
+      carId,
+      startPice,
+      currentPrice,
+      startTime,
+      endTime,
+      status,
+    );
+  }
 }

@@ -6,11 +6,11 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { User } from '../../entities/user.entity';
-import { UserSchema } from './user.schema';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserViewDto } from './dto/user-view.dto';
+import { User } from './domain/entities/user.entity';
+import { UserSchema } from './infrastructure/typeorm/schemas/user.schema';
+import { CreateUserDto } from './application/dto/create-user.dto';
+import { UpdateUserDto } from './application/dto/update-user.dto';
+import { UserViewDto } from './application/dto/user-view.dto';
 
 @Injectable()
 export class UserService {
@@ -35,7 +35,12 @@ export class UserService {
     if (existing) throw new ConflictException('Email is already in use');
 
     const hashed = await bcrypt.hash(data.password, 10);
-    const created = this.repo.create({ ...data, password: hashed });
+    const created = User.create(
+      data.firstName,
+      data.lastName,
+      data.email,
+      hashed,
+    );
     const saved = await this.repo.save(created);
     return new UserViewDto(saved);
   }

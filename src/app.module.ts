@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserSchema } from './modules/user/user.schema';
+import { UserSchema } from './modules/user/infrastructure/typeorm/schemas/user.schema';
 import { UserModule } from './modules/user/user.module';
 import { LotSchema } from './modules/lot/lot.shema';
 import { LotModule } from './modules/lot/lot.module';
