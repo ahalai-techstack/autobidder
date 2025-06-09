@@ -7,6 +7,7 @@ import { LotModule } from './modules/lot/lot.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AppService } from './app.service';
     }),
     UserModule,
     LotModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
