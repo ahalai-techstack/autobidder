@@ -1,14 +1,14 @@
-import { Base } from '../../../../entities/base.entity';
+import { Base } from './base.entity';
 
 export class User extends Base {
   constructor(
-    public readonly id: string,
-    public readonly createdAt: Date,
-    public readonly updatedAt: Date,
-    public readonly firstName: string,
-    public readonly lastName: string,
-    public readonly email: string,
-    public readonly password: string,
+    public id: string,
+    public createdAt: Date,
+    public updatedAt: Date,
+    public firstName: string,
+    public lastName: string,
+    public email: string,
+    public password: string,
   ) {
     super(id, createdAt, updatedAt);
   }

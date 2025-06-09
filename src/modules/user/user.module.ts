@@ -1,28 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { UserSchema } from './infrastructure/typeorm/schemas/user.schema';
-import { UserController } from './application/user.controller';
-import { UserRepository } from './infrastructure/typeorm/repositories/user.repository.impl';
-import { CreateUserUseCase } from './application/use-cases/create-user.use-case';
-import { FindAllUsersUseCase } from './application/use-cases/find-all-users.use-case';
-import { FindUserByIdUseCase } from './application/use-cases/find-user-by-id.use-case';
-import { UpdateUserUseCase } from './application/use-cases/update-user.use-case';
-import { RemoveUserUseCase } from './application/use-cases/remove-user.use-case';
+import { UserSchema } from './user.schema';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserSchema])],
-  providers: [
-    CreateUserUseCase,
-    FindAllUsersUseCase,
-    FindUserByIdUseCase,
-    UpdateUserUseCase,
-    RemoveUserUseCase,
-    {
-      provide: 'IUserRepository',
-      useClass: UserRepository,
-    },
-  ],
+  providers: [UserService],
   controllers: [UserController],
 })
 export class UserModule {}
