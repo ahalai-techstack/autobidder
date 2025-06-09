@@ -8,36 +8,40 @@ import {
   Delete,
   ParseUUIDPipe,
 } from '@nestjs/common';
-import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly users: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   @Get()
-  findAll() {
-    return this.users.findAll();
+  async findAll() {
+    const users = await this.userService.findAll();
+    return users;
   }
 
   @Get(':id')
   find(@Param('id', new ParseUUIDPipe()) id: string) {
-    return this.users.findOne(id);
+    const user = this.userService.findOne(id);
+    return user;
   }
 
   @Post()
-  create(@Body() dto: CreateUserDto) {
-    return this.users.create(dto);
+  async create(@Body() dto: CreateUserDto) {
+    const user = await this.userService.create(dto);
+    return user;
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
-    return this.users.update(id, dto);
+  async update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+    const updatedUser = await this.userService.update(id, dto);
+    return updatedUser;
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.users.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.userService.remove(id);
   }
 }

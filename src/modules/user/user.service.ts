@@ -35,7 +35,12 @@ export class UserService {
     if (existing) throw new ConflictException('Email is already in use');
 
     const hashed = await bcrypt.hash(data.password, 10);
-    const created = this.repo.create({ ...data, password: hashed });
+    const created = User.create(
+      data.firstName,
+      data.lastName,
+      data.email,
+      hashed,
+    );
     const saved = await this.repo.save(created);
     return new UserViewDto(saved);
   }

@@ -7,6 +7,8 @@ services:
       - '3000:3000'
     environment:
       - DB_URL=postgres://postgres:postgres@pg:5432/mydb
+    volumes:
+      - .:/app
     restart: unless-stopped
     depends_on:
       - pg
