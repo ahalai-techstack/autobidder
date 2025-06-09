@@ -28,12 +28,6 @@ export class UserController {
     return user;
   }
 
-  @Post()
-  async create(@Body() dto: CreateUserDto) {
-    const user = await this.userService.create(dto);
-    return user;
-  }
-
   @Patch(':id')
   async update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
     const updatedUser = await this.userService.update(id, dto);
