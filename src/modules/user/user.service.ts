@@ -30,6 +30,12 @@ export class UserService {
     return new UserViewDto(user);
   }
 
+  async findByEmail(email: string): Promise<UserViewDto | null> {
+    const user = await this.repo.findOne({ where: { email } });
+    if (!user) return null;
+    return new UserViewDto(user);
+  }
+
   async create(data: CreateUserDto): Promise<UserViewDto> {
     const existing = await this.repo.findOne({ where: { email: data.email } });
     if (existing) throw new ConflictException('Email is already in use');
