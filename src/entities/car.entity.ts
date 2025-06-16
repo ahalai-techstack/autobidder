@@ -7,10 +7,11 @@ export class Car extends Base {
     id: string,
     createdAt: Date,
     updatedAt: Date,
+    public readonly brandId: string,
     public readonly carModelId: string,
-    public readonly yearOfManufacture: string,
-    public readonly vin: string,
-    public readonly mileage: string,
+    public readonly yearOfManufacture: number,
+    // public readonly vin: string,
+    // public readonly mileage: string,
   ) {
     super(id, createdAt, updatedAt);
   }
@@ -20,14 +21,14 @@ export const CarEntity = new EntitySchema<Car>({
   name: 'car',
   columns: {
     ...BaseColumns,
-    mileage: {
-      type: 'number',
-    },
-    vin: {
-      type: 'varchar',
-      length: 17,
-      unique: true,
-    },
+    // mileage: {
+    //   type: 'number',
+    // },
+    // vin: {
+    //   type: 'varchar',
+    //   length: 17,
+    //   unique: true,
+    // },
     yearOfManufacture: {
       type: 'number',
     },
