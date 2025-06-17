@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 
 @Controller('users')
 export class UserController {
@@ -18,6 +19,12 @@ export class UserController {
   async findAll() {
     const users = await this.userService.findAll();
     return users;
+  }
+
+  @Get('me')
+  async findMe(@CurrentUser() user) {
+    const userData = await this.userService.findOne(user.id);
+    return userData;
   }
 
   @Get(':id')
