@@ -4,7 +4,6 @@ import { EntitySchema } from 'typeorm';
 export const CarSchema = new EntitySchema<Car>({
   name: 'car',
   tableName: 'cars',
-  target: Car,
   columns: {
     carModelId: {
       primary: true,
