@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { LotService } from './lot.service';
 import { CreateLotDto } from './dto/create-lot.dto';
 import { UpdateLotDto } from './dto/update-lot.dto';
+import { LotEditGuard } from './guards/lot-edit.guard';
 
 @Controller('lots')
 export class LotController {
@@ -30,6 +32,7 @@ export class LotController {
     return this.lotService.create(dto);
   }
 
+  @UseGuards(LotEditGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() dto: UpdateLotDto) {
     return this.lotService.update(id, dto);

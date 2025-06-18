@@ -13,6 +13,7 @@ import { CarBrandSchema } from './modules/car-brand/car-brand.schema';
 import { CarSchema } from './modules/car/car.schema';
 import { CarModelSchema } from './modules/car-model/car-model.schema';
 import { CarModelModule } from './modules/car-model/car-model.module';
+import { CarModule } from './modules/car/car.module';
 
 @Module({
   imports: [
@@ -40,6 +41,10 @@ import { CarModelModule } from './modules/car-model/car-model.module';
     AuthModule,
     CarBrandModule,
     CarModelModule,
+<<<<<<< HEAD
+=======
+    CarModule,
+>>>>>>> feat/authorization
   ],
   controllers: [AppController],
   providers: [AppService],
