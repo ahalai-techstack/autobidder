@@ -30,19 +30,24 @@ export class UserService {
     return new UserViewDto(user);
   }
 
-  async create(data: CreateUserDto): Promise<UserViewDto> {
+  async findByEmail(email: string): Promise<User | null> {
+    const user = await this.repo.findOne({ where: { email } });
+    if (!user) return null;
+    return user;
+  }
+
+  async create(data: CreateUserDto): Promise<User> {
     const existing = await this.repo.findOne({ where: { email: data.email } });
     if (existing) throw new ConflictException('Email is already in use');
 
-    const hashed = await bcrypt.hash(data.password, 10);
     const created = User.create(
       data.firstName,
       data.lastName,
       data.email,
-      hashed,
+      data.password,
     );
     const saved = await this.repo.save(created);
-    return new UserViewDto(saved);
+    return saved;
   }
 
   async update(id: string, data: UpdateUserDto): Promise<UserViewDto> {
