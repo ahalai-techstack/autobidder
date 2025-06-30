@@ -41,10 +41,7 @@ import { CarModule } from './modules/car/car.module';
     AuthModule,
     CarBrandModule,
     CarModelModule,
-<<<<<<< HEAD
-=======
     CarModule,
->>>>>>> feat/authorization
   ],
   controllers: [AppController],
   providers: [AppService],
