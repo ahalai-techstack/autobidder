@@ -17,18 +17,15 @@ export class Car {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt: Date;
 
-  @Column({ name: 'brand_id', type: 'uuid', nullable: true })
-  brandId: string;
-
   @Column({ name: 'car_model_id', type: 'uuid', nullable: false })
   carModelId: string;
 
   @Column({ name: 'year_of_manufacture', type: 'integer', nullable: true })
   yearOfManufacture: number;
 
-  // @Column({ type: 'varchar', length: 17, unique: true, nullable: true })
-  // vin: string; 
+  @Column({ type: 'varchar', length: 17, unique: true, nullable: true })
+  vin: string;
 
-  // @Column({ type: 'number', nullable: true })
-  // mileage: number;
+  @Column({ type: 'int', nullable: true })
+  mileage: number;
 }

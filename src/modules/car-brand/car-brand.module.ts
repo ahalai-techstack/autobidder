@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { CarBrandController } from './car-brand.controller';
 import { CarBrandService } from './car-brand.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CarBrandSchema } from './car-brand.schema';
+import { CarBrand } from './car-brand.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CarBrandSchema])],
+  imports: [TypeOrmModule.forFeature([CarBrand])],
   controllers: [CarBrandController],
   providers: [CarBrandService],
 })
