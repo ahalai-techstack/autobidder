@@ -1,1 +1,1 @@
-export { Lot } from '../../entities/lot.entity';
+export { Lot } from './lot.entity';

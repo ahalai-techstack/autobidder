@@ -1,4 +1,4 @@
-import { Lot } from 'src/entities/lot.entity';
+import { Lot } from './lot.entity';
 
 export class LotPolicy {
   static canUpdate(user: { userId: string; email: string }, lot: Lot): boolean {

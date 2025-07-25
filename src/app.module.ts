@@ -14,6 +14,8 @@ import { CarModel } from './modules/car-model/car-model.entity';
 import { CarModelModule } from './modules/car-model/car-model.module';
 import { CarModule } from './modules/car/car.module';
 import { CarBrand } from './modules/car-brand/car-brand.entity';
+import { Role } from './modules/role/role.entity';
+import { RoleModule } from './modules/role/role.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,13 +27,14 @@ import { CarBrand } from './modules/car-brand/car-brand.entity';
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
         url: config.get('DB_URL'),
-        entities: [User, Lot, Car, CarModel, CarBrand],
+        entities: [User, Lot, Car, CarModel, CarBrand, Role],
         synchronize: true,
       }),
     }),
     UserModule,
     LotModule,
     AuthModule,
+    RoleModule,
     CarBrandModule,
     CarModelModule,
     CarModule,
