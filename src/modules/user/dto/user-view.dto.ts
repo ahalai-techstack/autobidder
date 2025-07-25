@@ -1,5 +1,3 @@
-import { User } from 'src/entities/user.entity';
-
 export class UserViewDto {
   id: string;
   firstName: string;
@@ -9,7 +7,7 @@ export class UserViewDto {
   updatedAt: Date;
   password?: string;
 
-  constructor(partial: Partial<User>) {
+  constructor(partial) {
     delete partial.password;
     Object.assign(this, partial);
   }

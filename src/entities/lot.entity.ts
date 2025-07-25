@@ -1,52 +1,43 @@
-import { Base } from './base.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Check,
+} from 'typeorm';
 
-export enum LotStatus {
-  SCHEDULED = 'SCHEDULED',
-  OPEN = 'OPEN',
-  CLOSING = 'CLOSING',
-  SOLD = 'SOLD',
-  CANCELLED = 'CANCELLED',
-}
+@Entity('lots')
+@Check('CHK_lot_end_after_start', '"end_time" > "start_time"')
+@Check(
+  'CHK_lot_current_more_or_equal_start_price',
+  '"current_price" >= "start_price"',
+)
+export class Lot {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-export class Lot extends Base {
-  constructor(
-    id: string,
-    createdAt: Date,
-    updatedAt: Date,
-    public readonly ownerId: string,
-    public readonly carId: string,
-    public readonly startPrice: number,
-    public readonly currentPrice: number,
-    public readonly startTime: Date,
-    public readonly endTime: Date,
-    public readonly status: LotStatus,
-    public readonly description?: string,
-  ) {
-    super(id, createdAt, updatedAt);
-  }
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
+  createdAt: Date;
 
-  static create(
-    ownerId: string,
-    carId: string,
-    startPrice: number,
-    currentPrice: number,
-    startTime: Date,
-    endTime: Date,
-    status: LotStatus = LotStatus.SCHEDULED,
-  ): Lot {
-    const id = crypto.randomUUID();
-    const currentTime = new Date();
-    return new Lot(
-      id,
-      currentTime,
-      currentTime,
-      ownerId,
-      carId,
-      startPrice,
-      currentPrice,
-      startTime,
-      endTime,
-      status,
-    );
-  }
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
+  updatedAt: Date;
+
+  @Column({ name: 'owner_id', type: 'uuid' })
+  ownerId: string;
+
+  @Column({ name: 'car_id', type: 'uuid' })
+  carId: string;
+
+  @Column({ name: 'start_price', type: 'decimal' })
+  startPrice: number;
+
+  @Column({ name: 'current_price', type: 'decimal' })
+  currentPrice: number;
+
+  @Column({ name: 'start_time', type: 'timestamp with time zone' })
+  startTime: Date;
+
+  @Column({ name: 'end_time', type: 'timestamp with time zone' })
+  endTime: Date;
 }

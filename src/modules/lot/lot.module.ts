@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { LotSchema } from './lot.schema';
+import { Lot } from './lot.schema';
 import { LotService } from './lot.service';
 import { LotController } from './lot.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([LotSchema])],
+  imports: [TypeOrmModule.forFeature([Lot])],
   providers: [LotService],
   controllers: [LotController],
 })

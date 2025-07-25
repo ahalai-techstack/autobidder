@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './modules/user/user.entity';
 import { UserModule } from './modules/user/user.module';
-import { LotSchema } from './modules/lot/lot.schema';
+import { Lot } from './modules/lot/lot.schema';
 import { LotModule } from './modules/lot/lot.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
@@ -25,7 +25,7 @@ import { CarBrand } from './modules/car-brand/car-brand.entity';
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
         url: config.get('DB_URL'),
-        entities: [User, LotSchema, Car, CarModel, CarBrand],
+        entities: [User, Lot, Car, CarModel, CarBrand],
         synchronize: true,
       }),
     }),
