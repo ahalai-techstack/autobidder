@@ -6,8 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { User } from '../../entities/user.entity';
-import { UserSchema } from './user.schema';
+import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserViewDto } from './dto/user-view.dto';
@@ -15,7 +14,7 @@ import { UserViewDto } from './dto/user-view.dto';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserSchema)
+    @InjectRepository(User)
     private readonly repo: Repository<User>,
   ) {}
 
@@ -39,13 +38,11 @@ export class UserService {
   async create(data: CreateUserDto): Promise<User> {
     const existing = await this.repo.findOne({ where: { email: data.email } });
     if (existing) throw new ConflictException('Email is already in use');
+    if (data.password) {
+      data.password = await bcrypt.hash(data.password, 10);
+    }
 
-    const created = User.create(
-      data.firstName,
-      data.lastName,
-      data.email,
-      data.password,
-    );
+    const created = this.repo.create(data);
     const saved = await this.repo.save(created);
     return saved;
   }

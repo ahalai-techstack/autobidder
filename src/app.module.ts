@@ -1,20 +1,21 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserSchema } from './modules/user/user.schema';
+import { User } from './modules/user/user.entity';
 import { UserModule } from './modules/user/user.module';
-import { LotSchema } from './modules/lot/lot.schema';
+import { Lot } from './modules/lot/lot.schema';
 import { LotModule } from './modules/lot/lot.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { CarBrandModule } from './modules/car-brand/car-brand.module';
-import { CarBrandSchema } from './modules/car-brand/car-brand.schema';
-import { CarSchema } from './modules/car/car.schema';
-import { CarModelSchema } from './modules/car-model/car-model.schema';
+import { Car } from './modules/car/car.entity';
+import { CarModel } from './modules/car-model/car-model.entity';
 import { CarModelModule } from './modules/car-model/car-model.module';
 import { CarModule } from './modules/car/car.module';
-
+import { CarBrand } from './modules/car-brand/car-brand.entity';
+import { Role } from './modules/role/role.entity';
+import { RoleModule } from './modules/role/role.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -26,19 +27,14 @@ import { CarModule } from './modules/car/car.module';
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
         url: config.get('DB_URL'),
-        entities: [
-          UserSchema,
-          LotSchema,
-          CarBrandSchema,
-          CarSchema,
-          CarModelSchema,
-        ],
+        entities: [User, Lot, Car, CarModel, CarBrand, Role],
         synchronize: true,
       }),
     }),
     UserModule,
     LotModule,
     AuthModule,
+    RoleModule,
     CarBrandModule,
     CarModelModule,
     CarModule,

@@ -1,11 +1,10 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { CarBrand } from 'src/entities/car-brand';
 import { Repository } from 'typeorm';
-import { CarBrandSchema } from './car-brand.schema';
+import { CarBrand } from './car-brand.entity';
 
 export class CarBrandService {
   constructor(
-    @InjectRepository(CarBrandSchema)
+    @InjectRepository(CarBrand)
     private readonly carBrandRepository: Repository<CarBrand>,
   ) {}
 

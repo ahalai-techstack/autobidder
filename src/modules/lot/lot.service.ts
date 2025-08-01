@@ -1,13 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Lot } from 'src/entities/lot.entity';
-import { LotSchema } from './lot.schema';
+import { Lot } from './lot.schema';
 
 @Injectable()
 export class LotService {
   constructor(
-    @InjectRepository(LotSchema)
+    @InjectRepository(Lot)
     private readonly lotRepository: Repository<Lot>,
   ) {}
 

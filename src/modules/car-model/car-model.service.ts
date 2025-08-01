@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CarModelSchema } from './car-model.schema';
+import { CarModel } from './car-model.entity';
 import { Repository } from 'typeorm';
-import { CarModel } from 'src/entities/car-model';
+import { CarBrand } from '../car-brand/car-brand.entity';
 
 @Injectable()
 export class CarModelService {
   constructor(
-    @InjectRepository(CarModelSchema)
+    @InjectRepository(CarModel)
     private readonly carModelRepository: Repository<CarModel>,
+    @InjectRepository(CarBrand)
+    private readonly carBrandRepository: Repository<CarBrand>,
   ) {}
 
   async findAll(): Promise<CarModel[]> {
@@ -23,9 +25,15 @@ export class CarModelService {
     return carModel;
   }
 
-  async create(data: Partial<CarModel>): Promise<CarModel> {
+  async create(data: { name: string; brandId: string }): Promise<CarModel> {
+    const brand = await this.carBrandRepository.findOneBy({ id: data.brandId });
+
+    if (!brand) {
+      throw new Error(`Car brand with ID ${data.brandId} not found`);
+    }
+
     const existing = await this.carModelRepository.findOne({
-      where: { name: data.name, brandId: data.brandId },
+      where: { name: data.name, brand: { id: data.brandId } },
     });
 
     if (existing) {

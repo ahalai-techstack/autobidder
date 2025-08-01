@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { CarSchema } from './car.schema';
-import { Car } from 'src/entities/car.entity';
+import { Car } from './car.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CarService {
   constructor(
-    @InjectRepository(CarSchema)
+    @InjectRepository(Car)
     private readonly carRepository: Repository<Car>,
   ) {}
 
