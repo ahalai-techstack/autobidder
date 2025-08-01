@@ -11,6 +11,7 @@ import { RegisterUserDto } from './dto/register.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { Public } from 'src/common/decorators/public.decorator';
+import { LoginDto } from "./dto/login.dto";
 
 @Controller('auth')
 export class AuthController {
@@ -23,10 +24,9 @@ export class AuthController {
   }
 
   @Public()
-  @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@Request() req) {
-    return this.authService.login(req.user);
+  login(@Body() body: LoginDto) {
+    return this.authService.login(body.email, body.password);
   }
 
   @UseGuards(JwtAuthGuard)

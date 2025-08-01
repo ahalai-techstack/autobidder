@@ -38,9 +38,6 @@ export class UserService {
   async create(data: CreateUserDto): Promise<User> {
     const existing = await this.repo.findOne({ where: { email: data.email } });
     if (existing) throw new ConflictException('Email is already in use');
-    if (data.password) {
-      data.password = await bcrypt.hash(data.password, 10);
-    }
 
     const created = this.repo.create(data);
     const saved = await this.repo.save(created);

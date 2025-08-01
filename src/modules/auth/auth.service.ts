@@ -40,6 +40,7 @@ export class AuthService {
     if (!user) throw new UnauthorizedException('User not found');
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
+
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid password');
     }
@@ -52,12 +53,8 @@ export class AuthService {
     };
   }
 
-  login(user: {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-  }) {
+  async login(email: string, password: string) {
+    const user = await this.validateUser(email, password);
     const payload = { sub: user.id, email: user.email };
     return {
       accessToken: this.jwtService.sign(payload),
