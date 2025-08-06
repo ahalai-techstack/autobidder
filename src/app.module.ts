@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './modules/user/user.entity';
 import { UserModule } from './modules/user/user.module';
-import { Lot } from './modules/lot/lot.schema';
+import { Lot } from './modules/lot/lot.entity';
 import { LotModule } from './modules/lot/lot.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
@@ -18,6 +18,7 @@ import { Role } from './modules/role/role.entity';
 import { RoleModule } from './modules/role/role.module';
 import { RoleUserModule } from './modules/role-user/role-user.module';
 import { RoleUser } from './modules/role-user/role-user.entity';
+import { BidModule } from './modules/bid/bid.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -41,6 +42,7 @@ import { RoleUser } from './modules/role-user/role-user.entity';
     CarModelModule,
     CarModule,
     RoleUserModule,
+    BidModule,
   ],
   controllers: [AppController],
   providers: [AppService],

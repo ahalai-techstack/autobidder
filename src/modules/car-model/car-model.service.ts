@@ -25,6 +25,14 @@ export class CarModelService {
     return carModel;
   }
 
+  async hasBrandId(brandId: string) {
+    const existing = await this.carModelRepository.findOneBy({
+      brandId,
+    });
+
+    return !!existing;
+  }
+
   async create(data: { name: string; brandId: string }): Promise<CarModel> {
     const brand = await this.carBrandRepository.findOneBy({ id: data.brandId });
 
@@ -33,7 +41,7 @@ export class CarModelService {
     }
 
     const existing = await this.carModelRepository.findOne({
-      where: { name: data.name, brand: { id: data.brandId } },
+      where: { name: data.name, brandId: data.brandId },
     });
 
     if (existing) {

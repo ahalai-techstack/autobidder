@@ -1,13 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Lot } from './lot.schema';
+import { Lot } from './lot.entity';
+import { ICreateLot } from './types';
+import { CarModelService } from '../car-model/car-model.service';
 
 @Injectable()
 export class LotService {
   constructor(
     @InjectRepository(Lot)
     private readonly lotRepository: Repository<Lot>,
+    private readonly carModelService: CarModelService,
   ) {}
 
   async findAll(): Promise<Lot[]> {
@@ -22,7 +25,14 @@ export class LotService {
     return lot;
   }
 
-  async create(data: Partial<Lot>): Promise<Lot> {
+  async create(data: ICreateLot): Promise<Lot> {
+    const { brandId } = data;
+    const isModelValid = await this.carModelService.hasBrandId(brandId);
+
+    if (!isModelValid) {
+      throw new Error('The car brand does have such a car model');
+    }
+
     const lot = this.lotRepository.create(data);
     return this.lotRepository.save(lot);
   }

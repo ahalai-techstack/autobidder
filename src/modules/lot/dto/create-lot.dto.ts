@@ -1,11 +1,14 @@
-import { IsUUID, IsNumber, IsDateString } from 'class-validator';
+import { IsUUID, IsNumber, IsDateString, IsString } from 'class-validator';
 
 export class CreateLotDto {
   @IsUUID()
   ownerId: string;
 
   @IsUUID()
-  carId: string;
+  brandId: string;
+
+  @IsUUID()
+  modelId: string;
 
   @IsNumber()
   startPrice: number;
@@ -13,9 +16,18 @@ export class CreateLotDto {
   @IsNumber()
   currentPrice: number;
 
-  @IsDateString()
-  startTime: Date;
+  @IsString()
+  vin: string;
 
-  @IsDateString()
-  endTime: Date;
+  @IsDateString({
+    strict: true,
+    strictSeparator: true,
+  })
+  startTime: string;
+
+  @IsDateString({
+    strict: true,
+    strictSeparator: true,
+  })
+  endTime: string;
 }

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Lot } from '../lot/lot.entity';
 
 @Entity()
 export class CarBrand {
@@ -10,4 +11,7 @@ export class CarBrand {
     length: 128,
   })
   name: string;
+
+  @OneToMany(() => Lot, (lot) => lot.brand)
+  lots: Lot[];
 }

@@ -9,5 +9,6 @@ import { CarBrand } from '../car-brand/car-brand.entity';
   imports: [TypeOrmModule.forFeature([CarModel, CarBrand])],
   controllers: [CarModelController],
   providers: [CarModelService],
+  exports: [CarModelService],
 })
 export class CarModelModule {}
