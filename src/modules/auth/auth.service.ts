@@ -3,12 +3,16 @@ import * as bcrypt from 'bcrypt';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterUserDto } from './dto/register.dto';
+import { RoleUserService } from '../role-user/role-user.service';
+import { RoleService } from '../role/role.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
+    // private readonly roleUserService: RoleUserService,
+    // private readonly roleService: RoleService,
   ) {}
 
   async register(user: RegisterUserDto) {
@@ -20,6 +24,11 @@ export class AuthService {
       email: email,
       password: hashed,
     });
+    // const adminRole = await this.roleService.findByName('admin');
+
+    // if (adminRole) {
+    //   await this.roleUserService.create(newUser, adminRole);
+    // }
 
     const payload = { sub: newUser.id, email: newUser.email };
     const token = this.jwtService.sign(payload);

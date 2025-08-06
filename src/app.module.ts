@@ -16,6 +16,8 @@ import { CarModule } from './modules/car/car.module';
 import { CarBrand } from './modules/car-brand/car-brand.entity';
 import { Role } from './modules/role/role.entity';
 import { RoleModule } from './modules/role/role.module';
+import { RoleUserModule } from './modules/role-user/role-user.module';
+import { RoleUser } from './modules/role-user/role-user.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -27,7 +29,7 @@ import { RoleModule } from './modules/role/role.module';
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
         url: config.get('DB_URL'),
-        entities: [User, Lot, Car, CarModel, CarBrand, Role],
+        entities: [User, Lot, Car, CarModel, CarBrand, Role, RoleUser],
         synchronize: true,
       }),
     }),
@@ -38,6 +40,7 @@ import { RoleModule } from './modules/role/role.module';
     CarBrandModule,
     CarModelModule,
     CarModule,
+    RoleUserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -17,10 +17,10 @@ export class User {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt: Date;
 
-  @Column({ type: 'varchar', length: 128 })
+  @Column({ name: 'first_name', type: 'varchar', length: 128 })
   firstName: string;
 
-  @Column({ type: 'varchar', length: 128 })
+  @Column({ name: 'last_name', type: 'varchar', length: 128 })
   lastName: string;
 
   @Column({ type: 'varchar', length: 128, unique: true })
@@ -29,6 +29,6 @@ export class User {
   @Column({ type: 'varchar', length: 64, nullable: true })
   password: string;
 
-  @Column({ name: 'role_id', type: 'uuid', nullable: true })
-  roleId: string;
+  // @Column({ name: 'role_id', type: 'uuid', nullable: true })
+  // roleId: string;
 }

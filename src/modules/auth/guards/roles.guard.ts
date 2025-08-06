@@ -1,14 +1,10 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { RoleService } from '../../role/role.service';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(
-    private reflector: Reflector,
-    private roleService: RoleService,
-  ) {}
+  constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredRoles = this.reflector.getAllAndOverride<string[]>(
@@ -17,29 +13,16 @@ export class RolesGuard implements CanActivate {
     );
 
     if (!requiredRoles) {
-      return true; // No roles required, allow access
+      return true;
     }
 
     const request = context.switchToHttp().getRequest();
     const user = request.user;
 
     if (!user) {
-      return false; // No user in request
+      return false;
     }
 
-    // Get user's role
-    const userId = user.userId || user.id;
-    if (!userId) {
-      return false; // No user ID found
-    }
-
-    const userRole = await this.roleService.getUserRole(userId);
-
-    if (!userRole) {
-      return false; // User has no role
-    }
-
-    // Check if user's role is in the required roles
-    return requiredRoles.includes(userRole.name);
+    return !!requiredRoles.find((role) => role === user?.role);
   }
 }

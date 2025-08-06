@@ -9,9 +9,10 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterUserDto } from './dto/register.dto';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { Public } from 'src/common/decorators/public.decorator';
 import { LoginDto } from './dto/login.dto';
+import { RolesGuard } from './guards/roles.guard';
+import { Roles } from './decorators/roles.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -30,8 +31,9 @@ export class AuthController {
     return this.authService.login(body.email, body.password);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(RolesGuard)
   @Get('profile')
+  @Roles('admin', 'user')
   getProfile(@Request() req) {
     return req.user;
   }
