@@ -19,6 +19,7 @@ import { RoleModule } from './modules/role/role.module';
 import { RoleUserModule } from './modules/role-user/role-user.module';
 import { RoleUser } from './modules/role-user/role-user.entity';
 import { BidModule } from './modules/bid/bid.module';
+import { Bid } from './modules/bid/bid.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -30,7 +31,7 @@ import { BidModule } from './modules/bid/bid.module';
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
         url: config.get('DB_URL'),
-        entities: [User, Lot, Car, CarModel, CarBrand, Role, RoleUser],
+        entities: [User, Lot, Car, CarModel, CarBrand, Role, RoleUser, Bid],
         synchronize: true,
       }),
     }),

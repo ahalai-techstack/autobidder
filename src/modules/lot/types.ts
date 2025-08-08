@@ -3,7 +3,6 @@ export interface ICreateLot {
   brandId: string;
   modelId: string;
   startPrice: number;
-  currentPrice: number;
   startTime: string;
   endTime: string;
 }

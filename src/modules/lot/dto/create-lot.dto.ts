@@ -13,9 +13,6 @@ export class CreateLotDto {
   @IsNumber()
   startPrice: number;
 
-  @IsNumber()
-  currentPrice: number;
-
   @IsString()
   vin: string;
 

@@ -11,30 +11,27 @@ import {
 import { User } from '../user/user.entity';
 import { CarBrand } from '../car-brand/car-brand.entity';
 import { CarModel } from '../car-model/car-model.entity';
+import { Bid } from '../bid/bid.entity';
 
-enum LotStatus {
-  Upcoming = 'Upcoming',
-  Open = 'Open',
-  Finished = 'Finished',
-  Cancelled = 'Cancelled',
-}
+// enum LotStatus {
+//   Upcoming = 'Upcoming',
+//   Open = 'Open',
+//   Finished = 'Finished',
+//   Cancelled = 'Cancelled',
+// }
 
 @Entity('lots')
 @Check('CHK_lot_end_after_start', '"end_time" > "start_time"')
-@Check(
-  'CHK_lot_current_more_or_equal_start_price',
-  '"current_price" >= "start_price"',
-)
 export class Lot {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({
-    type: 'enum',
-    enum: LotStatus,
-    default: LotStatus.Upcoming,
-  })
-  status: LotStatus;
+  // @Column({
+  //   type: 'enum',
+  //   enum: LotStatus,
+  //   default: LotStatus.Upcoming,
+  // })
+  // status: LotStatus;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
@@ -42,20 +39,20 @@ export class Lot {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt: Date;
 
-  @Column({ name: 'owner_id', type: 'uuid' })
+  @Column({ name: 'owner_id', type: 'uuid', unique: false })
   ownerId: string;
 
-  @Column({ name: 'brand_id', type: 'uuid' })
+  @Column({ name: 'brand_id', type: 'uuid', unique: false })
   brandId: string;
 
-  @Column({ name: 'model_id', type: 'uuid' })
+  @Column({ name: 'model_id', type: 'uuid', unique: false })
   modelId: string;
 
   @Column({ name: 'start_price', type: 'decimal' })
   startPrice: number;
 
-  @Column({ name: 'current_price', type: 'decimal' })
-  currentPrice: number;
+  @Column({ name: 'top_bid_id', type: 'uuid', nullable: true })
+  topBidId: string;
 
   @Column({ name: 'start_time', type: 'timestamptz' })
   startTime: Date;
@@ -63,7 +60,7 @@ export class Lot {
   @Column({ name: 'end_time', type: 'timestamptz' })
   endTime: Date;
 
-  @Column({ unique: true, nullable: false })
+  @Column({ nullable: false })
   vin: string;
 
   @ManyToOne(() => User, (user) => user.id)
@@ -77,4 +74,8 @@ export class Lot {
   @ManyToOne(() => CarModel, (carModel) => carModel.lots)
   @JoinColumn({ name: 'model_id' })
   model: CarModel;
+
+  @ManyToOne(() => Bid, (bid) => bid.id)
+  @JoinColumn({ name: 'top_bid_id' })
+  topBid: Bid;
 }

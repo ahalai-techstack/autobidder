@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Bid } from '../bid/bid.entity';
 
 @Entity('users')
 export class User {
@@ -31,4 +33,7 @@ export class User {
 
   // @Column({ name: 'role_id', type: 'uuid', nullable: true })
   // roleId: string;
+
+  @OneToMany(() => Bid, (bid) => bid.user)
+  bids: Bid[];
 }

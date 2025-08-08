@@ -16,6 +16,19 @@ export class LotController {
     return this.lotService.findById(id);
   }
 
+  @Get(':id/winner-bid')
+  async findWinnerBid(@Param('id') id: string) {
+    const bid = await this.lotService.findWinnerBid(id);
+
+    if (!bid) {
+      return {
+        bidId: null,
+      };
+    }
+
+    return bid;
+  }
+
   @Post()
   create(@Body() dto: CreateLotDto) {
     return this.lotService.create(dto);
