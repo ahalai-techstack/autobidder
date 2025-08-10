@@ -23,10 +23,13 @@ export class UserService {
     return users.map((user) => new UserViewDto(user));
   }
 
-  async findOne(id: string): Promise<UserViewDto> {
-    const user = await this.repo.findOne({ where: { id } });
-    if (!user) throw new NotFoundException(`User with ID ${id} not found`);
-    return new UserViewDto(user);
+  async findOne(userId: string) {
+    const user = await this.repo.findOne({
+      where: { id: userId },
+      relations: ['role'],
+    });
+    if (!user) throw new NotFoundException(`User with ID ${userId} not found`);
+    return user;
   }
 
   async findByEmail(email: string): Promise<User | null> {

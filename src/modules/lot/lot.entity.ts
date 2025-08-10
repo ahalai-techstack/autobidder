@@ -67,7 +67,8 @@ export class Lot {
   @JoinColumn({ name: 'owner_id' })
   owner: User;
 
-  @ManyToOne(() => CarBrand, (carBrand) => carBrand.lots)
+  // @ManyToOne(() => CarBrand, (carBrand) => carBrand.lots)
+  @ManyToOne(() => CarBrand)
   @JoinColumn({ name: 'brand_id' })
   brand: CarBrand;
 

@@ -12,6 +12,6 @@ export class CarBrand {
   })
   name: string;
 
-  @OneToMany(() => Lot, (lot) => lot.brand)
-  lots: Lot[];
+  // @OneToMany(() => Lot, (lot) => lot.brand)
+  // lots: Lot[];
 }

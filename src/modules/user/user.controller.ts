@@ -1,4 +1,13 @@
-import { Controller, Get, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Body,
+  Patch,
+  Delete,
+  ParseUUIDPipe,
+} from '@nestjs/common';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { JwtPayload } from '../auth/types/jwt-payload.type';
@@ -23,6 +32,12 @@ export class UserController {
   find(@Param('id', new ParseUUIDPipe()) id: string) {
     const user = this.userService.findOne(id);
     return user;
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+    const updatedUser = await this.userService.update(id, dto);
+    return updatedUser;
   }
 
   @Delete(':id')

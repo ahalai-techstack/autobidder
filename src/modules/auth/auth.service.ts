@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
@@ -28,7 +32,9 @@ export class AuthService {
     const userRole = await this.roleService.findByName('user');
 
     if (userRole) {
-      await this.roleUserService.create(newUser, userRole);
+      newUser.role = userRole;
+    } else {
+      throw new InternalServerErrorException('User role not found');
     }
 
     const payload = { sub: newUser.id };

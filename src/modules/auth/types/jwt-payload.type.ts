@@ -1,4 +1,4 @@
 export type JwtPayload = {
   sub: string; // userId
-  roles: string[];
+  role: string;
 };

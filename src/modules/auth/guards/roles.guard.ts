@@ -29,6 +29,6 @@ export class RolesGuard implements CanActivate {
       throw new BadRequestException('No user role found in the request');
     }
 
-    return requiredRoles.some((role) => user.roles.includes(role));
+    return requiredRoles.some((role) => role === user.role);
   }
 }
