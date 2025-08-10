@@ -1,16 +1,13 @@
-import { IsUUID, IsNumber, IsDateString, IsString } from 'class-validator';
+import { IsUUID, IsDateString, IsString, IsPositive } from 'class-validator';
 
 export class CreateLotDto {
   @IsUUID()
   ownerId: string;
 
   @IsUUID()
-  brandId: string;
-
-  @IsUUID()
   modelId: string;
 
-  @IsNumber()
+  @IsPositive()
   startPrice: number;
 
   @IsString()

@@ -10,6 +10,7 @@ import { Lot } from './lot.entity';
 import { ICreateLot } from './types';
 import { CarModelService } from '../car-model/car-model.service';
 import { BidService } from '../bid/bid.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class LotService {
@@ -19,6 +20,7 @@ export class LotService {
     @Inject(forwardRef(() => BidService))
     private readonly bidService: BidService,
     private readonly carModelService: CarModelService,
+    private readonly userService: UserService,
   ) {}
 
   async findAll(): Promise<Lot[]> {
@@ -36,11 +38,19 @@ export class LotService {
   }
 
   async create(data: ICreateLot): Promise<Lot> {
-    const { brandId } = data;
-    const isModelValid = await this.carModelService.hasBrandId(brandId);
+    const [user, model] = await Promise.all([
+      this.userService.findOne(data.ownerId),
+      this.carModelService.findById(data.modelId),
+    ]);
 
-    if (!isModelValid) {
-      throw new Error('The car brand does have such a car model');
+    if (!user) {
+      throw new NotFoundException(`User with ID ${data.ownerId} not found`);
+    }
+
+    if (!model) {
+      throw new NotFoundException(
+        `Car model with ID ${data.modelId} not found`,
+      );
     }
 
     const lot = this.lotRepository.create(data);

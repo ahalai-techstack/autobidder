@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Body,
-  Patch,
-  Delete,
-  ParseUUIDPipe,
-} from '@nestjs/common';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { Controller, Get, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { JwtPayload } from '../auth/types/jwt-payload.type';

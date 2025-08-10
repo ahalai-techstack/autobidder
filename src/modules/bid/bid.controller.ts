@@ -14,6 +14,15 @@ import { CreateBidDto } from './dto/create-bid.dto';
 export class BidController {
   constructor(private readonly bidService: BidService) {}
 
+  @Get('top/:lotId')
+  async findTopBid(@Param('lotId', new ParseUUIDPipe()) lotId: string) {
+    const bid = await this.bidService.findTopBid(lotId);
+    if (!bid) {
+      throw new NotFoundException(`No bids found for lot ID ${lotId}`);
+    }
+    return bid;
+  }
+
   @Get(':id')
   async findById(@Param('id', new ParseUUIDPipe()) id: string) {
     const bid = await this.bidService.findById(id);
@@ -28,9 +37,8 @@ export class BidController {
     return await this.bidService.findAll();
   }
 
-  // @Post()
-  // async create(@Body() dto: CreateBidDto) {
-  //   const { amountOfMoney, userId, lotId } = dto;
-  //   return await this.bidService.create(amountOfMoney, userId, lotId);
-  // }
+  @Post()
+  async create(@Body() dto: CreateBidDto) {
+    return await this.bidService.create(dto);
+  }
 }
