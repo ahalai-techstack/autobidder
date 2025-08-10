@@ -51,48 +51,4 @@ export class BidService {
     });
     return topBid;
   }
-
-  async create(amountOfMoney: number, userId: string, lotId: string) {
-    const [lot, user] = await Promise.all([
-      this.lotService.findById(lotId),
-      this.userService.findOne(userId),
-    ]);
-
-    if (!lot) {
-      throw new Error(`Lot with id ${lotId} not found`);
-    }
-
-    if (!user) {
-      throw new Error(`User with id ${userId} not found`);
-    }
-
-    const isLotActive =
-      new Date().getTime() >= lot.startTime.getTime() &&
-      new Date().getTime() <= lot.endTime.getTime();
-
-    if (!isLotActive) {
-      throw new BadRequestException('Lot is not active');
-    }
-
-    const currentTopBid = await this.findTopBidByLotId(lotId);
-
-    // First, save the bid to get the ID
-    const bid = this.bidRepository.create({
-      amountOfMoney,
-      userId,
-      lotId,
-    });
-    const savedBid = await this.bidRepository.save(bid);
-
-    const isNewTopBid =
-      currentTopBid && amountOfMoney > +currentTopBid.amountOfMoney;
-    console.log({ isNewTopBid });
-
-    if (!isNewTopBid) {
-      throw new BadRequestException(
-        'New bid should be higher than the current top bid',
-      );
-    }
-    return await this.lotService.updateTopBidId(savedBid.id, lot);
-  }
 }

@@ -62,27 +62,4 @@ export class LotService {
       throw new NotFoundException(`Lot with ID ${id} not found`);
     }
   }
-
-  async updateTopBidId(bidId: string, lot: Lot): Promise<Lot> {
-    try {
-      // Use update method for atomic operation
-      await this.lotRepository.update(lot.id, { topBidId: bidId });
-
-      // Return the updated lot
-      const updatedLot = await this.findById(lot.id);
-      if (!updatedLot) {
-        throw new NotFoundException(
-          `Lot with ID ${lot.id} not found after update`,
-        );
-      }
-
-      return updatedLot;
-    } catch (error) {
-      throw new Error(
-        `Failed to update topBidId for lot ${lot.id}: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
-      );
-    }
-  }
 }

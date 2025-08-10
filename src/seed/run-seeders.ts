@@ -11,13 +11,20 @@ import CarModelFactory from './factories/car-model.factory';
 import MainSeeder from './main-seeder';
 import userFactory from './factories/user.factory';
 import roleFactory from './factories/role.factory';
+import lotFactory from './factories/lot.factory';
 
 const options: DataSourceOptions & SeederOptions = {
   type: 'postgres',
   url: 'postgres://postgres:postgres@localhost:9000/mydb',
   entities: [CarBrand, Lot, CarModel, User, Bid, Role],
   seeds: [MainSeeder],
-  factories: [CarBrandFactory, CarModelFactory, userFactory, roleFactory],
+  factories: [
+    CarBrandFactory,
+    CarModelFactory,
+    userFactory,
+    roleFactory,
+    lotFactory,
+  ],
 };
 
 export const dataSource = new DataSource(options);

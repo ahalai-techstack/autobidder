@@ -28,9 +28,9 @@ export class BidController {
     return await this.bidService.findAll();
   }
 
-  @Post()
-  async create(@Body() dto: CreateBidDto) {
-    const { amountOfMoney, userId, lotId } = dto;
-    return await this.bidService.create(amountOfMoney, userId, lotId);
-  }
+  // @Post()
+  // async create(@Body() dto: CreateBidDto) {
+  //   const { amountOfMoney, userId, lotId } = dto;
+  //   return await this.bidService.create(amountOfMoney, userId, lotId);
+  // }
 }

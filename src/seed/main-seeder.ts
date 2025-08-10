@@ -6,6 +6,7 @@ import { faker } from '@faker-js/faker';
 import { User } from '../modules/user/user.entity';
 import * as bcrypt from 'bcrypt';
 import { Role } from '../modules/role/role.entity';
+import { Lot } from '../modules/lot/lot.entity';
 
 export default class MainSeeder implements Seeder {
   track?: boolean | undefined;
@@ -29,7 +30,7 @@ export default class MainSeeder implements Seeder {
         }),
     );
 
-    await carModelsRepo.save(carModels);
+    const savedCarModels = await carModelsRepo.save(carModels);
 
     const roleFactory = factoryManager.get(Role);
 
@@ -50,12 +51,13 @@ export default class MainSeeder implements Seeder {
         .map(async () => {
           const user = usersFactory.make({
             role: userRole,
+            password: await bcrypt.hash('mypassword', 10),
           });
           return user;
         }),
     );
 
-    await userRepo.save(users);
+    const savedUsers = await userRepo.save(users);
 
     // Create admin user
     const adminUser = await usersFactory.make({
@@ -66,5 +68,21 @@ export default class MainSeeder implements Seeder {
       password: await bcrypt.hash('mypassword', 10),
     });
     await dataSource.getRepository(User).save(adminUser);
+
+    // Create lots
+    const lotFactory = factoryManager.get(Lot);
+    const lotRepo = dataSource.getRepository(Lot);
+    const lots = await Promise.all(
+      Array(10)
+        .fill(null)
+        .map(async () => {
+          const lot = lotFactory.make({
+            owner: faker.helpers.arrayElement(savedUsers),
+            model: faker.helpers.arrayElement(savedCarModels),
+          });
+          return lot;
+        }),
+    );
+    await lotRepo.save(lots);
   }
 }
