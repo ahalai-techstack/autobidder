@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RoleUser } from './role-user.entity';
 import { Repository } from 'typeorm';
@@ -14,14 +14,6 @@ export class RoleUserService {
     private readonly roleService: RoleService,
   ) {}
 
-  async findUserRoles(userId: string): Promise<Role[]> {
-    const roleUsers = await this.roleUserRepository.find({
-      where: { user: { id: userId } },
-      relations: ['role'],
-    });
-    return roleUsers.map((ru) => ru.role);
-  }
-
   async findByUserId(userId: string) {
     const roleUser = await this.roleUserRepository.findOneBy({
       id: userId,
@@ -30,22 +22,17 @@ export class RoleUserService {
     return roleUser;
   }
 
-  async findUserRole(userId: string) {
-    const roleUser = await this.roleUserRepository.findOneBy({
-      userId: userId,
-    });
+  async findUserRoles(userId: string) {
+    const userRoles = await this.roleUserRepository
+      .createQueryBuilder('roleUser')
+      .leftJoinAndSelect('roleUser.role', 'role')
+      .where('roleUser.user_id = :userId', { userId })
+      .getMany();
 
-    if (!roleUser) {
-      throw new Error('User not found');
-    }
-
-    const role = await this.roleService.findById(roleUser.roleId);
-
-    if (!role) {
-      throw new Error('User role not found');
-    }
-
-    return role;
+    return userRoles.map((r) => ({
+      roleId: r.role.id,
+      name: r.role.name,
+    }));
   }
 
   async create(user: User, role: Role) {

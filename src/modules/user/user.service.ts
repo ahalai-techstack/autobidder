@@ -44,25 +44,6 @@ export class UserService {
     return saved;
   }
 
-  async update(id: string, data: UpdateUserDto): Promise<UserViewDto> {
-    const user = await this.findOne(id);
-
-    if (data.email && data.email !== user.email) {
-      const existing = await this.repo.findOne({
-        where: { email: data.email },
-      });
-      if (existing) throw new ConflictException('Email is already in use');
-    }
-
-    if (data.password) {
-      data.password = await bcrypt.hash(data.password, 10);
-    }
-
-    const updated = this.repo.merge(user as User, data);
-    const saved = await this.repo.save(updated);
-    return new UserViewDto(saved);
-  }
-
   async remove(id: string) {
     const result = await this.repo.delete(id);
     if (!result.affected) {

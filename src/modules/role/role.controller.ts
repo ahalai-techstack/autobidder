@@ -10,11 +10,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { RoleService } from './role.service';
-import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
 
-@Controller('roles')
 @UseGuards(RolesGuard)
+@Controller('roles')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
@@ -31,7 +31,7 @@ export class RoleController {
   }
 
   @Post()
-  // @Roles('admin')
+  @Roles('admin')
   async create(@Body() dto: { name: string; description?: string }) {
     return await this.roleService.create(dto);
   }

@@ -31,9 +31,6 @@ export class User {
   @Column({ type: 'varchar', length: 64, nullable: true })
   password: string;
 
-  // @Column({ name: 'role_id', type: 'uuid', nullable: true })
-  // roleId: string;
-
   @OneToMany(() => Bid, (bid) => bid.user)
   bids: Bid[];
 }

@@ -11,8 +11,8 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-    // private readonly roleUserService: RoleUserService,
-    // private readonly roleService: RoleService,
+    private readonly roleUserService: RoleUserService,
+    private readonly roleService: RoleService,
   ) {}
 
   async register(user: RegisterUserDto) {
@@ -24,13 +24,14 @@ export class AuthService {
       email: email,
       password: hashed,
     });
-    // const adminRole = await this.roleService.findByName('admin');
 
-    // if (adminRole) {
-    //   await this.roleUserService.create(newUser, adminRole);
-    // }
+    const userRole = await this.roleService.findByName('user');
 
-    const payload = { sub: newUser.id, email: newUser.email };
+    if (userRole) {
+      await this.roleUserService.create(newUser, userRole);
+    }
+
+    const payload = { sub: newUser.id };
     const token = this.jwtService.sign(payload);
     return {
       accessToken: token,
@@ -64,7 +65,7 @@ export class AuthService {
 
   async login(email: string, password: string) {
     const user = await this.validateUser(email, password);
-    const payload = { sub: user.id, email: user.email };
+    const payload = { sub: user.id };
     return {
       accessToken: this.jwtService.sign(payload),
       user: {

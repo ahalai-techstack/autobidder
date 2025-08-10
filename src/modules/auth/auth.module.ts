@@ -10,7 +10,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
-import { RoleUserModule } from "../role-user/role-user.module";
+import { RoleUserModule } from '../role-user/role-user.module';
 
 @Module({
   controllers: [AuthController],

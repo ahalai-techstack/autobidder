@@ -12,7 +12,6 @@ import {
 import { CarBrandService } from './car-brand.service';
 import { CreateCarBrandDto } from './dto/create-car-brand.dto';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../auth/decorators/roles.decorator';
 
 @Controller('car-brands')
 @UseGuards(RolesGuard)
@@ -30,13 +29,13 @@ export class CarBrandController {
   }
 
   @Post()
-  @Roles('admin', 'manager')
+  // @Roles('admin', 'manager')
   async create(@Body() dto: CreateCarBrandDto) {
     return await this.carBrandService.create(dto);
   }
 
   @Patch(':id')
-  @Roles('admin')
+  // @Roles('admin')
   async update(
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() dto: CreateCarBrandDto,
@@ -45,7 +44,7 @@ export class CarBrandController {
   }
 
   @Delete(':id')
-  @Roles('admin')
+  // @Roles('admin')
   async delete(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.carBrandService.delete(id);
   }
