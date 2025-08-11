@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CarModel } from './car-model.entity';
 import { Repository } from 'typeorm';
@@ -20,7 +20,7 @@ export class CarModelService {
   async findById(id: string): Promise<CarModel> {
     const carModel = await this.carModelRepository.findOneBy({ id });
     if (!carModel) {
-      throw new Error(`Car model with ID ${id} not found`);
+      throw new BadRequestException(`Car model with ID ${id} not found`);
     }
     return carModel;
   }
@@ -63,7 +63,7 @@ export class CarModelService {
   async delete(id: string): Promise<void> {
     const result = await this.carModelRepository.delete(id);
     if (result.affected === 0) {
-      throw new Error(`Car model with ID ${id} not found`);
+      throw new BadRequestException(`Car model with ID ${id} not found`);
     }
   }
 }

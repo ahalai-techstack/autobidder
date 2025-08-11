@@ -12,7 +12,6 @@ import { User } from '../user/user.entity';
 import { CarModel } from '../car-model/car-model.entity';
 
 @Entity('lots')
-@Check('CHK_lot_end_after_start', '"end_time" > "start_time"')
 export class Lot {
   @PrimaryGeneratedColumn('uuid')
   id: string;

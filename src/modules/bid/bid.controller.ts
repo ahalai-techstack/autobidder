@@ -6,6 +6,7 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
+  Query,
 } from '@nestjs/common';
 import { BidService } from './bid.service';
 import { CreateBidDto } from './dto/create-bid.dto';
@@ -14,13 +15,18 @@ import { CreateBidDto } from './dto/create-bid.dto';
 export class BidController {
   constructor(private readonly bidService: BidService) {}
 
-  @Get('top/:lotId')
-  async findTopBid(@Param('lotId', new ParseUUIDPipe()) lotId: string) {
+  @Get('top')
+  async findTopBid(@Query('lotId', new ParseUUIDPipe()) lotId: string) {
     const bid = await this.bidService.findTopBid(lotId);
     if (!bid) {
       throw new NotFoundException(`No bids found for lot ID ${lotId}`);
     }
     return bid;
+  }
+
+  @Get('lot')
+  findBidsOfLot(@Query('lotId', new ParseUUIDPipe()) lotId: string) {
+    return this.bidService.findAllByLotId(lotId);
   }
 
   @Get(':id')

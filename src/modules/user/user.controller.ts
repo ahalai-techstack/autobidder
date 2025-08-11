@@ -1,7 +1,16 @@
-import { Controller, Get, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Delete,
+  ParseUUIDPipe,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { JwtPayload } from '../auth/types/jwt-payload.type';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
 
 @Controller('users')
 export class UserController {
@@ -17,6 +26,13 @@ export class UserController {
   async findMe(@CurrentUser() user: JwtPayload) {
     const userData = await this.userService.findOne(user.sub);
     return userData;
+  }
+
+  @Get('role-test')
+  @Roles('admin', 'user')
+  @UseGuards(RolesGuard)
+  roleTest(@CurrentUser() user: JwtPayload) {
+    return user;
   }
 
   @Get(':id')
