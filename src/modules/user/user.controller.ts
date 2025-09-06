@@ -1,16 +1,15 @@
 import {
   Controller,
   Get,
-  Post,
   Param,
   Body,
   Patch,
   Delete,
   ParseUUIDPipe,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 
 @Controller('users')
 export class UserController {
@@ -22,15 +21,15 @@ export class UserController {
     return users;
   }
 
+  @Get('me')
+  async findMe(@CurrentUser() user) {
+    const userData = await this.userService.findOne(user.id);
+    return userData;
+  }
+
   @Get(':id')
   find(@Param('id', new ParseUUIDPipe()) id: string) {
     const user = this.userService.findOne(id);
-    return user;
-  }
-
-  @Post()
-  async create(@Body() dto: CreateUserDto) {
-    const user = await this.userService.create(dto);
     return user;
   }
 

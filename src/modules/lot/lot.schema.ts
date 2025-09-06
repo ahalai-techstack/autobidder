@@ -15,7 +15,7 @@ export const LotSchema = new EntitySchema<Lot>({
       type: 'uuid',
       name: 'car_id',
     },
-    startPice: {
+    startPrice: {
       type: 'decimal',
       name: 'start_price',
     },
@@ -24,13 +24,14 @@ export const LotSchema = new EntitySchema<Lot>({
       name: 'current_price',
     },
     startTime: {
-      type: 'time with time zone',
+      type: 'timestamp with time zone',
       name: 'start_time',
     },
     endTime: {
-      type: 'time with time zone',
+      type: 'timestamp with time zone',
       name: 'end_time',
     },
+
   },
   checks: [
     {

@@ -15,11 +15,12 @@ export class Lot extends Base {
     updatedAt: Date,
     public readonly ownerId: string,
     public readonly carId: string,
-    public readonly startPice: number,
+    public readonly startPrice: number,
     public readonly currentPrice: number,
     public readonly startTime: Date,
     public readonly endTime: Date,
     public readonly status: LotStatus,
+    public readonly description?: string,
   ) {
     super(id, createdAt, updatedAt);
   }
@@ -27,7 +28,7 @@ export class Lot extends Base {
   static create(
     ownerId: string,
     carId: string,
-    startPice: number,
+    startPrice: number,
     currentPrice: number,
     startTime: Date,
     endTime: Date,
@@ -41,7 +42,7 @@ export class Lot extends Base {
       currentTime,
       ownerId,
       carId,
-      startPice,
+      startPrice,
       currentPrice,
       startTime,
       endTime,

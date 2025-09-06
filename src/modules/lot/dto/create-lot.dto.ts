@@ -8,7 +8,7 @@ export class CreateLotDto {
   carId: string;
 
   @IsNumber()
-  startPice: number;
+  startPrice: number;
 
   @IsNumber()
   currentPrice: number;
